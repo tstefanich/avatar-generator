@@ -74,8 +74,7 @@ function draw() {
   //   }
   // }
   // saveCanvas('ava', 'png');
-  var filename = 'avatar_'+i;
-  saveCanvas(filename, 'png');
+
 
 }
 function keyPressed(){
@@ -170,6 +169,10 @@ function setBodyPart(){
   neck = loadImage("assets/neck_" + tempParts[1] + ".png");
   body = loadImage("assets/body_" + tempParts[2] + ".png");
   legs = loadImage("assets/legs_" + tempParts[3] + ".png");
+
+  var filename = 'avatar_'+i;
+  saveCanvas(filename, 'png');
+  
   i++;
   setTimeout(function(){
     setBodyPart()

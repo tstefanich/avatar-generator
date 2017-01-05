@@ -9,20 +9,50 @@ var totalNeck = 3
 var totalBody = 3
 var totalLegs = 3
 
+var headArray = ['1','2','3'];
+var neckArray = ['1','2','3'];
+var bodyArray = ['1','2','3'];
+var legsArray = ['1','2','3'];
+var allArrays = [headArray, neckArray, bodyArray, legsArray];
+function preload() {
+  for (var i = 0; i < headArray; i++) {
+    loadImage("assets/head_" + headArray[i] + ".png");
+  }
+  for (var i = 0; i < neckArray; i++) {
+    loadImage("assets/head_" + neckArray[i] + ".png");
+  }
+  for (var i = 0; i < bodyArray; i++) {
+    loadImage("assets/head_" + bodyArray[i] + ".png");
+  }
+  for (var i = 0; i < legsArray; i++) {
+    loadImage("assets/head_" + legsArray[i] + ".png");
+  }
 
+}
+var uniqueCombinations;
+var i = 0;
 function setup() {
   createCanvas(200, 600);
   // imageMode(CENTER)
   getRandomAvatar()
-  frameRate(5)
+  frameRate(1)
+  uniqueCombinations = allPossibleCases(allArrays);
+  console.log(uniqueCombinations);
+  setTimeout(function(){
+    setBodyPart()
+  }, 2000);
 }
 
 function draw() {
-  clear()
+  clear();
   image(head, width/2 - head.width/2, 100);
-  image(neck, width/2 - neck.width/2, 100+ head.height)
-  image(body, width/2 - body.width/2, 100+head.height+neck.height)
-  image(legs, width/2- legs.width/2, 100+head.height+neck.height+body.height-2)
+  image(neck, width/2 - neck.width/2, 100+ head.height);
+  image(body, width/2 - body.width/2, 100+head.height+neck.height);
+  image(legs, width/2- legs.width/2, 100+head.height+neck.height+body.height-2);
+  //background(77)
+
+
+
   // if(randHead<=3){
   //   randHead++
   // }else{
@@ -44,7 +74,8 @@ function draw() {
   //   }
   // }
   // saveCanvas('ava', 'png');
-
+  var filename = 'avatar_'+i;
+  saveCanvas(filename, 'png');
 
 }
 function keyPressed(){
@@ -132,11 +163,33 @@ function drawAvatar(){
 }
 
 
+function setBodyPart(){
+  var tempParts = uniqueCombinations[i].split('');
+  console.log(tempParts);
+  head = loadImage("assets/head_" + tempParts[0] + ".png");
+  neck = loadImage("assets/neck_" + tempParts[1] + ".png");
+  body = loadImage("assets/body_" + tempParts[2] + ".png");
+  legs = loadImage("assets/legs_" + tempParts[3] + ".png");
+  i++;
+  setTimeout(function(){
+    setBodyPart()
+  }, 1500);
+}
 
 
-
-
-
-
-
-
+ function allPossibleCases(arr) {
+  if (arr.length === 0) {
+    return [];
+  } else if (arr.length ===1){
+    return arr[0];
+  } else {
+    var result = [];
+    var allCasesOfRest = allPossibleCases(arr.slice(1));  // recur with the rest of array
+    for (var c in allCasesOfRest) {
+      for (var i = 0; i < arr[0].length; i++) {
+        result.push(arr[0][i] + allCasesOfRest[c]);
+      }
+    }
+    return result;
+  }
+}

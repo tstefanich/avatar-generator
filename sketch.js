@@ -19,10 +19,6 @@ function setup() {
 
 function draw() {
   clear()
-  head = loadImage("assets/head_" + randHead + ".png");
-  neck = loadImage("assets/neck_" + randNeck + ".png");
-  body = loadImage("assets/body_" + randBody + ".png");
-  legs = loadImage("assets/legs_" + randLegs + ".png");
   image(head, width/2 - head.width/2, 100);
   image(neck, width/2 - neck.width/2, 100+ head.height)
   image(body, width/2 - body.width/2, 100+head.height+neck.height)
